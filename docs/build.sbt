@@ -61,13 +61,13 @@ lazy val docs = project
       streams.value.log.info(s"Serving javadocs from $javaUnidocTarget and scaladocs from $unidocTarget. Rerun unidoc in root project to refresh")
       Seq(
         Documentation("java", Seq(
-          DocPath(baseDirectory.value / "manual" / "common", "."),
-          DocPath(baseDirectory.value / "manual" / "java", "."),
+          DocPath(baseDirectory.value / "manual-zh-cn" / "common", "."),
+          DocPath(baseDirectory.value / "manual-zh-cn" / "java", "."),
           DocPath(javaUnidocTarget, "api")
         ), "Home.html", "Java Home", Map("api/index.html" -> "API Documentation")),
         Documentation("scala", Seq(
-          DocPath(baseDirectory.value / "manual" / "common", "."),
-          DocPath(baseDirectory.value / "manual" / "scala", "."),
+          DocPath(baseDirectory.value / "manual-zh-cn" / "common", "."),
+          DocPath(baseDirectory.value / "manual-zh-cn" / "scala", "."),
           DocPath(unidocTarget, "api")
         ), "Home.html", "Scala Home", Map("api/index.html" -> "API Documentation"))
       )
@@ -77,7 +77,7 @@ lazy val docs = project
     markdownGenerateTheme := Some("bare"),
     markdownGenerateIndex := true,
     markdownStageIncludeWebJars := false,
-    markdownSourceUrl := Some(url(s"https://github.com/lagom/lagom/edit/$branch/docs/manual/"))
+    markdownSourceUrl := Some(url(s"https://github.com/lagom/lagom/edit/$branch/docs/manual-zh-cn/"))
 
   )
   .dependsOn(
