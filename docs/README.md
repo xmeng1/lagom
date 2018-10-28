@@ -22,6 +22,8 @@ To build the docs:
 
 1.  Change to the `/docs` folder and enter `sbt run`.
 
+Run with other port: enter `sbt "run $PORT_NUMBER"`, for example: `sbt "run 9001"`
+
 Available sbt options
 ---------------------
 
