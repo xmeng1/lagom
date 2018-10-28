@@ -1,10 +1,16 @@
-# Dependency Injection in Lagom
+# 依赖注入
 
 When building services in Lagom, your code will have dependencies on Lagom APIs and other services that need to be satisfied by concrete implementations at runtime. Often, the specific implementations will vary between development, test and production environments, so it's important not to couple your code tightly to a concrete implementation class. A class can declare constructor parameters with the abstract types of its dependencies --- usually represented by traits in Scala --- allowing the concrete implementations to be provided when the class is constructed. This pattern is called "dependency injection" and is fundamental to the way Lagom applications are assembled. Read "Dependency Injection in Scala using MacWire" for more background on this pattern and its benefits.
 
+在 Lagom 中构建服务时，您的代码将依赖于 Lagom APIs 和其他需要在运行时由具体实现满足的服务。通常，特定的实现会因开发、测试和生产环境的不同而不同，所以重要的是不要将代码与具体的实现类紧密地结合在一起。类可以使用依赖项的抽象类型声明构造函数参数——通常用 Scala 中的特征（traits）表示——允许在构造类时提供具体的实现。这种模式称为“依赖注入”，是 Lagom 应用程序组装方式的基础。请阅读“使用 MacWire 在 Scala 中的依赖注入”以了解此模式及其优点的更多背景知识。
+
 Your service's dependencies will have their own dependencies on other APIs in turn. Taken all together, these form a dependency graph that must be constructed when your application starts up. This process is called "wiring" your application, and is performed by creating a subclass of LagomApplication that contains initialization code.
 
+你的服务的依赖关系将依次依赖于其他 APIs。总之，它们形成了一个依赖关系图，在应用程序启动时必须构造这个依赖关系图。这个过程称为 “wiring” 你的应用程序，通过创建包含初始化代码的 LagomApplication 子类来执行。
+
 It is common to have clusters of interdependent classes that together form a larger logical component. It can be useful to modularize wiring code in a way that reflects these groupings. You can do so in Scala by defining a "component" trait that includes a combination of lazy val declarations that instantiate concrete implementations of interfaces that the component provides. Some of their constructor parameters may be declared as abstract methods, indicating a dependency that must be provided by another component or your application itself. Your application can then extend multiple components to mix them together into a fully assembled dependency graph. If you don't fulfill all of the declared requirements for the components you include in your service, it will not compile.
+
+相互依赖的类集群在一起形成更大的逻辑组件是很常见的。对于模块化组织代码进而反映这些分组的方式可能很有用。在 Scala 中，可以通过定义一个“组件”特性来实现，该特性包括一些惰性 val 声明的组合，这些声明实例化了组件提供的接口的具体实现。它们的一些构造函数参数可以声明为抽象方法，表示必须由另一个组件或应用程序本身提供的依赖项。然后，您的应用程序可以扩展多个组件，将它们组合到一个完全组装的依赖关系图中。如果您没有完成服务中包含的组件的所有声明的需求，它将无法编译。
 
 In "[Dependency Injection in Scala: guide](https://di-in-scala.github.io/#modules)" this method of mixing components together to form an application is referred to as the "thin cake pattern". The guide also introduces [Macwire](https://di-in-scala.github.io/#macwire) which we'll use in the next steps.
 
